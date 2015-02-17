@@ -22,15 +22,17 @@ using std::endl;
 /* Accepts input from user and if primes returns 1. If even returns 0.*/
 int main()
 {
-	int x = 0; // Entry
+	unsigned long x = 0; // Entry
 	
 
 	while(cin >> x){
 		int factors = 0; // Number of factors
 		//Base cases
-		if(x ==1 || x == 2){
+		if(x == 1){
+			cout << 0 << endl;
+		}
+		else if(x == 2){
 			cout << 1 << endl;
-
 		}
 		// Return 0 if even
 		else if(x %2 == 0){
@@ -43,9 +45,12 @@ int main()
 			 * before reaching sqrt(x)
 			 */
 			double s = sqrt(x);
-			for(int i = 1; i < s ; i++ ){
+			for(int i = 1; i <= s ; i+=2 ){
 				if(x % i == 0){
 					++factors; // Should only go up to 2
+					if (factors >2){
+						break;
+					}
 				}
 			}
 			/* Because it doesn't count up to X there should be only one factor*/
