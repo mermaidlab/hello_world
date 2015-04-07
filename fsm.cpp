@@ -27,7 +27,7 @@ using std::endl;
 int cppfsm::updateState(int& state, char c) {
 	//Implement a switch for handling each state that is passed in
 	// then depending on that state i will take the neccesary action
-	int prevState =  state;//this will save the previous state
+	const int prevState =  state;//this will save the previous state
 
 	//there are 8 cases
 	switch(state){
@@ -35,17 +35,15 @@ int cppfsm::updateState(int& state, char c) {
 			if(INSET(c,iddelim)){
 				state = start;
 				break;
-			}else if(c=='\\'){
-				state = readesc;
-				break;
-			}else if(c=='\"'){
+			}else if(c=='"'){
 				state = strlit;
 				break;
 			}else if(INSET(c,ident_st)){
-				state = scanid;
+				state = 1;
 				break;
 			}else if(INSET(c,num)){
 				state = scannum;
+				break;
 			}
 		case scanid:
 			if(INSET(c,iddelim)){
@@ -60,6 +58,7 @@ int cppfsm::updateState(int& state, char c) {
 			}
 		case comment:
 			state = comment;//state does not change?
+			break;
 		case strlit:
 			if(c=='\"'){
 				state = start;
@@ -67,6 +66,7 @@ int cppfsm::updateState(int& state, char c) {
 			}else if(c=='\\'){
 				state = readesc;
 				break;
+			
 			}else{
 				state  = strlit;
 				break;
@@ -106,6 +106,7 @@ int cppfsm::updateState(int& state, char c) {
 			}
 		case error:
 			state = error;
+			break;
 	}
 
 	return prevState;//return the previous state;
